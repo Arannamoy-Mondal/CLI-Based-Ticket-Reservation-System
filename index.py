@@ -33,10 +33,11 @@ class BusCompany:
         self.buses={} # it works as a database
     def install_bus(self,bus):
         self.buses[bus.coach]=bus # here key is coach no and value is bus object
+        print(f"\tBus added successfully.")
 
     def display_available_buses(self):
         if not self.buses: # there is no bus in dictionary
-            print('No buses available')
+            print('No buses available.')
         else:
             print(f"\tCoach\tDriver\tArrival\tDeparture\From Des\tTo")
             for key,value in self.buses.items():
@@ -56,28 +57,40 @@ class BusCompany:
             print("Invalid bus number")
 
     def display_seat_status(self,coach):
-        print(f"/t/tBus name: {coach}/n")
+        print(f"\t\tBus name: {coach}\n")
         if coach in self.buses:
             print(self.buses[coach].seats)
         else:
             print(f"Invalid coach no.")
 
-
-
-
-
-bus1=Bus("Scania-360","Dry","12.30","16.30","Istanbul","Bursa")
-bus2=Bus("Volvo-9600","Dry","12.30","16.30","Istanbul","Bursa")
 busCompany=BusCompany()
-busCompany.install_bus(bus1)
-busCompany.install_bus(bus2)
-busCompany.display_available_buses()
-busCompany.book_ticket("Scania-360",10)
-busCompany.book_ticket("Volvo-9600",10)
-busCompany.book_ticket("Volvo-9600",1)
-busCompany.book_ticket("Volvo-9600",2)
-busCompany.book_ticket("Volvo-9600",3)
-busCompany.book_ticket("Volvo-9600",4)
-
-busCompany.display_seat_status("Scania-360")
-busCompany.display_seat_status("Volvo-9600")
+while True:
+    print("Welcome to Bus ticket")
+    print("1. Install Bus")
+    print("2. View Avialable Buses")
+    print("3. Book Ticket")
+    print("4. Check Seat Status")
+    print("0. Exit Code")
+    choice=int(input("Enter choice:"))
+    if choice==1:
+        coach=input("Enter coach no:")
+        driver=input("Enter driver name:")
+        arrival=input("Enter departure time:")
+        departure=input("Enter arrival time:")
+        from_des=input("Enter departure destination:")
+        to=input("Enter arrival destination:")
+        busCompany.install_bus(Bus(coach,driver,arrival,departure,from_des,to))
+    elif choice==2:
+        busCompany.display_available_buses()
+    elif choice==3:
+        coach=input("Coach no:")
+        seatno=int(input("Seat no:"))
+        busCompany.book_ticket(coach,seatno)
+    elif choice==4:
+        coach=input("Enter coach no:")
+        busCompany.display_seat_status(coach)
+    elif choice==0:
+        print("Thanks for visiting")
+        break
+    else:
+        print("Invalid choice.")
